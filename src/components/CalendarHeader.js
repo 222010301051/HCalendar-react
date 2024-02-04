@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import logo from "../assets/logo.png";
 import GlobalContext from "../context/GlobalContext";
 export default function CalendarHeader() {
@@ -13,6 +13,7 @@ export default function CalendarHeader() {
     setSelectedCountry,
     selectedCountry,
   } = useContext(GlobalContext);
+  const [selectedYear, setSelectedYear] = useState(2024);
   const handleCountryChange = (e) => {
     setSelectedCountry(e.target.value);
   };
@@ -305,6 +306,7 @@ export default function CalendarHeader() {
           </option>
         ))}
       </select>
+      
       <div className="ml-auto flex items-center">
         <button
           onClick={handleToggleMonth}

@@ -313,7 +313,17 @@ function App() {
             <input
               type="number"
               value={selectedYear}
-              style={{ width: "100px" }}
+              style={{
+                width: "100px",
+                marginLeft: "10px",
+                width: "100px",
+                marginLeft: "10px",
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+                fontSize: "14px",
+                outline: "none",
+              }}
               onChange={(e) => setSelectedYear(parseInt(e.target.value))}
             />
             <AllMonthsView selectedYear={selectedYear} events={events} />
@@ -322,6 +332,22 @@ function App() {
         {viewMonth && (
           <React.Fragment>
             <CalendarHeader />
+            <input
+              type="number"
+              value={selectedYear}
+              style={{
+                width: "100px",
+                marginLeft: "10px",
+                width: "100px",
+                marginLeft: "10px",
+                padding: "8px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+                fontSize: "14px",
+                outline: "none",
+              }}
+              onChange={(e) => setSelectedYear(parseInt(e.target.value))}
+            />
             {loading && <Loader />}
             <div className="flex flex-1">
               <Sidebar />
