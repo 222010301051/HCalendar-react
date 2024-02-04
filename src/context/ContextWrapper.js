@@ -36,7 +36,7 @@ export default function ContextWrapper(props) {
   );
   const [viewMonth, setViewMonth] = useState(true);
   const [viewYear, setViewYear] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState("US");
+  const [selectedCountry, setSelectedCountry] = useState("IN");
 
   const filteredEvents = useMemo(() => {
     return savedEvents.filter((evt) =>

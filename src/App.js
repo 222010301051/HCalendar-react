@@ -12,8 +12,10 @@ import AllMonthsView from "./components/AllMonthsView";
 import YearHeader from "./components/YearHeader";
 import axios from "axios";
 import dayjs from "dayjs";
+import Loader from "./components/Loader";
 
 function App() {
+  const [loading, setLoading] = useState(true);
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const {
     dispatchCalEvent,
@@ -28,6 +30,7 @@ function App() {
   const [events, setLocalEvents] = useState([]);
 
   useEffect(() => {
+    setLoading(true);
     dispatchCalEvent({ type: "clear", payload: [] });
     setCurrentMonth(getMonth(monthIndex, selectedYear));
     fetchHolidays();
@@ -36,7 +39,7 @@ function App() {
   const fetchHolidays = async () => {
     try {
       const response = await axios.get(
-        `https://calendarific.com/api/v2/holidays?api_key=9ay6tbvNdZl3GFtegwo39mJuJ4bkYO3c&country=${selectedCountry}&year=${selectedYear}`
+        `https://calendarific.com/api/v2/holidays?api_key=7zMA341AL71xcaOKest0r6NfFmjF6h81&country=${selectedCountry}&year=${selectedYear}`
       );
 
       const fetchedEvents = response.data.response.holidays.map((holiday) => ({
@@ -49,8 +52,10 @@ function App() {
       }));
       setLocalEvents(fetchedEvents);
       console.log(fetchedEvents);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching holidays:", error);
+      setLoading(false);
     }
   };
 
@@ -291,7 +296,7 @@ function App() {
     return (
       Object.keys(countryCodes).find(
         (code) => countryCodes[code] === country
-      ) || "US"
+      ) || "IN"
     ); // Default to US if no mapping found
   };
 
@@ -303,9 +308,12 @@ function App() {
         {viewYear && (
           <React.Fragment>
             <YearHeader />
+            {loading && <Loader />}
+            Enter Year
             <input
               type="number"
               value={selectedYear}
+              style={{ width: "100px" }}
               onChange={(e) => setSelectedYear(parseInt(e.target.value))}
             />
             <AllMonthsView selectedYear={selectedYear} events={events} />
@@ -314,6 +322,7 @@ function App() {
         {viewMonth && (
           <React.Fragment>
             <CalendarHeader />
+            {loading && <Loader />}
             <div className="flex flex-1">
               <Sidebar />
               {/* Pass selectedYear as a prop to Month component */}
