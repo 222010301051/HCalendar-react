@@ -10,6 +10,8 @@ function savedEventsReducer(state, { type, payload }) {
       return state.map((evt) => (evt.id === payload.id ? payload : evt));
     case "delete":
       return state.filter((evt) => evt.id !== payload.id);
+    case "clear":
+      return [...state, []];
     default:
       throw new Error();
   }
@@ -34,6 +36,7 @@ export default function ContextWrapper(props) {
   );
   const [viewMonth, setViewMonth] = useState(true);
   const [viewYear, setViewYear] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState("US");
 
   const filteredEvents = useMemo(() => {
     return savedEvents.filter((evt) =>
@@ -44,9 +47,9 @@ export default function ContextWrapper(props) {
     );
   }, [savedEvents, labels]);
 
-  useEffect(() => {
-    localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
-  }, [savedEvents]);
+  // useEffect(() => {
+  //   localStorage.setItem("savedEvents", JSON.stringify(savedEvents));
+  // }, [savedEvents]);
 
   useEffect(() => {
     setLabels((prevLabels) => {
@@ -99,6 +102,8 @@ export default function ContextWrapper(props) {
         setViewMonth,
         viewYear,
         setViewYear,
+        selectedCountry,
+        setSelectedCountry,
       }}
     >
       {props.children}

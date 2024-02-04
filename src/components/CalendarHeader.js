@@ -10,7 +10,12 @@ export default function CalendarHeader() {
     viewYear,
     setViewMonth,
     setViewYear,
+    setSelectedCountry,
+    selectedCountry,
   } = useContext(GlobalContext);
+  const handleCountryChange = (e) => {
+    setSelectedCountry(e.target.value);
+  };
   const countryList = {
     AF: "Afghanistan",
     AL: "Albania",
@@ -289,7 +294,11 @@ export default function CalendarHeader() {
       <h2 className="ml-4 text-xl text-gray-500 font-bold">
         {dayjs(new Date(dayjs().year(), monthIndex)).format("MMMM YYYY")}
       </h2>
-      <select className="ml-4 border rounded py-2 px-4">
+      <select
+        value={selectedCountry}
+        onChange={handleCountryChange}
+        className="ml-4 border rounded py-2 px-4"
+      >
         {Object.entries(countryList).map(([code, name]) => (
           <option key={code} value={code}>
             {`${code} - ${name}`}

@@ -1,22 +1,31 @@
 import dayjs from "dayjs";
 import React, { useContext, useState, useEffect } from "react";
 import GlobalContext from "../context/GlobalContext";
+import { getMonth } from "date-fns";
 
-export default function Day({ day, rowIdx }) {
+export default function Day({ day, rowIdx, events }) {
   const [dayEvents, setDayEvents] = useState([]);
   const {
+    monthIndex,
     setDaySelected,
     setShowEventModal,
     filteredEvents,
     setSelectedEvent,
+    dispatchCalEvent,
   } = useContext(GlobalContext);
-
+  const curmon = getMonth(new Date());
   useEffect(() => {
     const events = filteredEvents.filter(
       (evt) => dayjs(evt.day).format("DD-MM-YY") === day.format("DD-MM-YY")
     );
     setDayEvents(events);
   }, [filteredEvents, day]);
+
+  useEffect(() => {
+    events.map((item) => {
+      dispatchCalEvent({ type: "push", payload: item });
+    });
+  }, [events]);
 
   function getCurrentDayClass() {
     return day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")

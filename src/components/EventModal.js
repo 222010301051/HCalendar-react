@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import GlobalContext from "../context/GlobalContext";
+import dayjs from "dayjs";
 
 const labelsClasses = ["indigo", "gray", "green", "blue", "red", "purple"];
 
@@ -23,7 +24,8 @@ export default function EventModal() {
       title,
       description,
       label: selectedLabel,
-      day: daySelected.valueOf(),
+      //day: daySelected.valueOf(),
+      day: dayjs("2024-02-01").toDate(),
       id: selectedEvent ? selectedEvent.id : Date.now(),
     };
     if (selectedEvent) {
