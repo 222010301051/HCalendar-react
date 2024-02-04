@@ -350,7 +350,6 @@ function App() {
             />
             {loading && <Loader />}
             <div className="flex flex-1">
-              <Sidebar />
               {/* Pass selectedYear as a prop to Month component */}
               <Month
                 month={currentMonth}
